@@ -56,10 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
             ).join("")}</ul>`
           : `<p class="no-participants">No participants yet</p>`;
 
+        const safeName = escapeHtml(String(name));
+        const safeDescription = escapeHtml(String(details.description ?? ""));
+        const safeSchedule = escapeHtml(String(details.schedule ?? ""));
+
         activityCard.innerHTML = `
-          <h4>${name}</h4>
-          <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
+          <h4>${safeName}</h4>
+          <p>${safeDescription}</p>
+          <p><strong>Schedule:</strong> ${safeSchedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
           <div class="participants-section">
             <strong>Participants (${details.participants.length}/${details.max_participants}):</strong>
