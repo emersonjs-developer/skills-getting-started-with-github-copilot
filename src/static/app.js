@@ -4,31 +4,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
-    function escapeHtml(str) {
-      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-    }
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
 
-    // Handle unregister clicks via event delegation
-    activitiesList.addEventListener("click", async (event) => {
-      const btn = event.target.closest(".delete-participant");
-      if (!btn) return;
-      const activity = btn.dataset.activity;
-      const email = btn.dataset.email;
-      try {
-        const response = await fetch(
-          `/activities/${encodeURIComponent(activity)}/signup?email=${encodeURIComponent(email)}`,
-          { method: "DELETE" }
-        );
-        if (response.ok) {
-          await fetchActivities();
-        } else {
-          const result = await response.json();
-          console.error("Error unregistering:", result.detail);
-        }
-      } catch (error) {
-        console.error("Error unregistering participant:", error);
+  // Handle unregister clicks via event delegation
+  activitiesList.addEventListener("click", async (event) => {
+    const btn = event.target.closest(".delete-participant");
+    if (!btn) return;
+    const activity = btn.dataset.activity;
+    const email = btn.dataset.email;
+    try {
+      const response = await fetch(
+        `/activities/${encodeURIComponent(activity)}/signup?email=${encodeURIComponent(email)}`,
+        { method: "DELETE" }
+      );
+      if (response.ok) {
+        await fetchActivities();
+      } else {
+        const result = await response.json();
+        console.error("Error unregistering:", result.detail);
       }
-    });
+    } catch (error) {
+      console.error("Error unregistering participant:", error);
+    }
+  });
 
   // Function to fetch activities from API
   async function fetchActivities() {
